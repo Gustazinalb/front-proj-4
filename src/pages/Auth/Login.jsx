@@ -30,9 +30,9 @@ export default function Login() {
 
     setEnviando(true);
     try {
-      await login({ email: email.trim(), senha });
+      const user = await login({ email: email.trim(), senha });
       toast.success("Login realizado com sucesso.");
-      navigate("/admin", { replace: true });
+      navigate(user?.perfil === "admin" ? "/admin" : "/perfil", { replace: true });
     } catch (error) {
       toast.error(getApiErrorMessage(error, "Não foi possível entrar. Verifique seus dados."));
     } finally {

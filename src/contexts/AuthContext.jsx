@@ -88,6 +88,7 @@ export function AuthProvider({ children }) {
       token: auth.token,
       user: auth.user,
       isAuthenticated: Boolean(auth.token),
+      isAdmin: auth.user?.perfil === "admin",
       login,
       updateUser,
       logout,

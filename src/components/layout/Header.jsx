@@ -7,12 +7,11 @@ const links = [
   { to: "/catalogo", label: "Catálogo" },
   { to: "/cronograma", label: "Cronograma" },
   { to: "/contato", label: "Contato" },
-  { to: "/admin", label: "Admin" },
 ];
 
 export default function Header() {
   const navigate = useNavigate();
-  const { isAuthenticated, user, logout } = useAuth();
+  const { isAuthenticated, isAdmin, user, logout } = useAuth();
   const [busca, setBusca] = useState("");
   const [menuAberto, setMenuAberto] = useState(false);
 
@@ -61,6 +60,13 @@ export default function Header() {
               <button className="btn btn-dark" type="submit">Buscar</button>
             </form>
             <ul className="navbar-nav ms-auto">
+              {isAdmin && (
+                <li className="nav-item">
+                  <Link className="nav-link" to="/admin" onClick={() => setMenuAberto(false)}>
+                    Admin
+                  </Link>
+                </li>
+              )}
               {links.map(({ to, label }) => (
                 <li className="nav-item" key={to}>
                   <Link className="nav-link" to={to} onClick={() => setMenuAberto(false)}>
@@ -68,6 +74,13 @@ export default function Header() {
                   </Link>
                 </li>
               ))}
+              {!isAuthenticated && (
+                <li className="nav-item">
+                  <Link className="nav-link" to="/login" onClick={() => setMenuAberto(false)}>
+                    Login
+                  </Link>
+                </li>
+              )}
               {isAuthenticated && (
                 <>
                   <li className="nav-item">
